@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
 WORKING_PATH=$(pwd -P) # no tailing slash
-SCRIPT_PATH=$( cd "$(dirname "$0")" ; pwd -P ) # no tailing slash
-SCRIPT_VERSION='1.1'
-SCRIPT_VERSION_NAME='Dragonair'
-C_VERSION="\033[38;5;69m"
+SCRIPT_PATH=$(
+  cd "$(dirname "$0")"
+  pwd -P
+) # no tailing slash
+SCRIPT_VERSION='1.2'
+SCRIPT_VERSION_NAME='Electrode' # https://en.wikipedia.org/wiki/List_of_generation_I_Pok%C3%A9mon
+C_VERSION="\033[38;5;220m"      # http://colors.sh/
 C_RED="\033[38;5;9m"
 C_GRN="\033[38;5;28m"
 C_ORN="\033[38;5;202m"
@@ -12,7 +15,10 @@ C_OFF="\033[0m"
 
 source ${SCRIPT_PATH}/app/db_import.sh
 source ${SCRIPT_PATH}/app/deactivate_plugins.sh
+source ${SCRIPT_PATH}/app/display_help_mssg.sh
 source ${SCRIPT_PATH}/app/print_version.sh
+source ${SCRIPT_PATH}/app/process_flags.sh
+source ${SCRIPT_PATH}/app/readable_time.sh
 source ${SCRIPT_PATH}/app/replace_url.sh
 source ${SCRIPT_PATH}/app/set_passwords.sh
 source ${SCRIPT_PATH}/app/setup_connection_vars.sh
@@ -21,30 +27,38 @@ source ${SCRIPT_PATH}/app/sync_uploads.sh
 source ${SCRIPT_PATH}/app/update_wp_config.sh
 source ${SCRIPT_PATH}/app/validate_variables.sh
 
-#required to work properly.
+ARG_SYNC_UPLOADS=0
+ARG_SYNC_DB=9
+ARG_SYNC_FILES=9
+
 print_version
+process_flags $@
 setup_connection_vars
 validate_variables
-#required
 
-exit;
+SYNC_START_TIME=$(date +%s)
 
-sync_files
-db_import
-update_wp_config
-deactivate_plugins
-set_passwords
-replace_url
+# File SYNC
+if [[ ${ARG_SYNC_FILES} == 1 ]]; then
+  sync_files
+fi
 
-while true; do
-    read -p "Sync done, do you also want to sync the Uploads? Y/N " yn
-    case $yn in
-        [Yy]* )
-          sync_uploads
-          break;;
-        [Nn]* )
-          break;;
-        * )
-          echo "Please answer yes or no.";;
-    esac
-done
+# Database & Extras sync.
+if [[ ${ARG_SYNC_DB} == 1 ]]; then
+  db_import
+  update_wp_config
+  deactivate_plugins
+  replace_url
+  set_passwords
+fi
+
+SYNC_END_TIME=$(date +%s)
+echo -e "Sync took: ${C_ORN}$(readable_time $((SYNC_END_TIME - SYNC_START_TIME)))${C_OFF}"
+
+# Uploads
+if [[ ${ARG_SYNC_UPLOADS} == 1 ]]; then
+  echo 'Syncing uploads, This might take a while. The rest of the installation is done.'
+  sync_uploads
+  SYNC_UPLOAD_TIME=$(date +%s)
+  echo -e "Uploads sync took: ${C_ORN}$(readable_time $((SYNC_UPLOAD_TIME - SYNC_END_TIME)))${C_OFF}"
+fi
