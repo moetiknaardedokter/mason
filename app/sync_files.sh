@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-function sync_files {
-  LIVE_SSH_SERVER=$( echo ${LIVE_SSH} | awk -F: '{print $1}' )
-  LIVE_SSH_PORT=$( echo ${LIVE_SSH} | awk -F: '{print $2}' )
+function sync_files() {
+  LIVE_SSH_SERVER=$(echo ${LIVE_SSH} | awk -F: '{print $1}')
+  LIVE_SSH_PORT=$(echo ${LIVE_SSH} | awk -F: '{print $2}')
   PORT=()
-  if [[ ! -z "${LIVE_SSH_PORT}"  ]]; then
+  if [[ ! -z "${LIVE_SSH_PORT}" ]]; then
     # @link https://superuser.com/a/360986
     PORT=(-e "ssh -p ${LIVE_SSH_PORT}")
   fi
@@ -23,7 +23,7 @@ function sync_files {
   EXCLUDES+=('/wp-config.php')
 
   for i in ${!EXCLUDES[@]}; do
-      EXCLUDES[i]="${EXCLUDES[i]/"$LOCAL_PATH"/"/"}"
+    EXCLUDES[i]="${EXCLUDES[i]/"$LOCAL_PATH"/"/"}"
   done
 
   # Prefix the excludes for the argument.
