@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+WORKING_PATH=$(pwd -P) # no tailing slash
+SCRIPT_PATH=$( cd "$(dirname "$0")" ; pwd -P ) # no tailing slash
+SCRIPT_VERSION='1.1'
+SCRIPT_VERSION_NAME='Dragonair'
+C_VERSION="\033[38;5;69m"
+C_RED="\033[38;5;9m"
+C_GRN="\033[38;5;28m"
+C_ORN="\033[38;5;202m"
+C_OFF="\033[0m"
+
+echo ${WORKING_PATH};
+
+source ${SCRIPT_PATH}/app/db_import.sh
+source ${SCRIPT_PATH}/app/deactivate_plugins.sh
+source ${SCRIPT_PATH}/app/print_version.sh
+source ${SCRIPT_PATH}/app/replace_url.sh
+source ${SCRIPT_PATH}/app/set_passwords.sh
+source ${SCRIPT_PATH}/app/setup_connection_vars.sh
+source ${SCRIPT_PATH}/app/sync_files.sh
+source ${SCRIPT_PATH}/app/sync_uploads.sh
+source ${SCRIPT_PATH}/app/update_wp_config.sh
+source ${SCRIPT_PATH}/app/validate_variables.sh
+
+#required to work properly.
+print_version
+setup_connection_vars
+validate_variables
+#required
+
+exit;
+
+sync_files
+db_import
+update_wp_config
+deactivate_plugins
+set_passwords
+replace_url
+
+while true; do
+    read -p "Sync done, do you also want to sync the Uploads? Y/N " yn
+    case $yn in
+        [Yy]* )
+          sync_uploads
+          break;;
+        [Nn]* )
+          break;;
+        * )
+          echo "Please answer yes or no.";;
+    esac
+done
