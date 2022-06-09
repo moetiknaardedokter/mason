@@ -1,0 +1,12 @@
+{
+    "name": "janw-me/mason",
+    "description": "Sync WordPress sites to a local installation and disable stuff.",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Janw Oostendorp",
+            "email": "webmaster@janw.me"
+        }
+    ]
+}
