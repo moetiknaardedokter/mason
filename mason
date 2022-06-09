@@ -31,7 +31,6 @@ ARG_SYNC_UPLOADS=0
 ARG_SYNC_DB=9
 ARG_SYNC_FILES=9
 
-print_version
 process_flags $@
 setup_connection_vars
 validate_variables

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 function process_flags() {
-  echo $@
-
   while test $# -gt 0; do
     case "$1" in
     -h | --help)
@@ -31,6 +29,8 @@ function process_flags() {
       ;;
     esac
   done
+
+  print_version
 
   if [[ ${ARG_SYNC_DB} == 1 ]] && [[ ${ARG_SYNC_FILES} == 9 ]]; then
     echo -ne "Syncing the ${C_ORN}database${C_OFF} only"
