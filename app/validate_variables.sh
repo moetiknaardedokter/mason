@@ -9,9 +9,17 @@ function validate_variables {
   echo -e ''
   echo -e "Local domainname:     ${C_GRN}${LOCAL_URL}${C_OFF}"
   echo -e "Local path:           ${C_GRN}${LOCAL_PATH}${C_OFF}"
-  echo -e ''
-  echo -e "All good? If not ${C_ORN}Ctrl+C${C_OFF} and fix it in the ${C_ORN}wp-cli.yml${C_OFF}"
-  read -p "" YES
+
+  while true; do
+      read -p "$( echo -e Are the connection details above correct? ${C_ORN}[y/N]${C_OFF}) " yn
+      case $yn in
+          [Yy]* )
+            break;; #yes, continue.
+          * )
+            echo -e "Check the ${C_ORN}wp-cli.yml${C_OFF} and that the local site is running."
+            exit 1;; # the user found an error.
+      esac
+  done
 
   echo -e 'Validation remote connection...'
   wp @live db check &> /dev/null

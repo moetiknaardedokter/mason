@@ -9,11 +9,11 @@ function setup_connection_vars {
 
   # Get all @live vars
   LIVE_SSH=$(            wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["ssh"];' );
-  LIVE_URL=$(basename $( wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["url"];' ) );
+  LIVE_URL=$(basename $( wp @live option get home) );
   LIVE_PATH=$(           wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["path"];' );
   # Set all local vars
-  LOCAL_URL=$(basename $(wp eval --skip-wordpress 'echo \WP_CLI::get_config("url");' ) );
-  LOCAL_PATH=$(          wp eval --skip-wordpress 'echo \WP_CLI::get_config("path");' );
+  LOCAL_URL=$(basename $( wp option get home ) );
+  LOCAL_PATH=$(          wp eval 'echo ABSPATH;' );
 
   #force Trailing slash
   LIVE_PATH=${LIVE_PATH%/}/

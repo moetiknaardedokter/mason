@@ -10,8 +10,6 @@ C_GRN="\033[38;5;28m"
 C_ORN="\033[38;5;202m"
 C_OFF="\033[0m"
 
-echo ${WORKING_PATH};
-
 source ${SCRIPT_PATH}/app/db_import.sh
 source ${SCRIPT_PATH}/app/deactivate_plugins.sh
 source ${SCRIPT_PATH}/app/print_version.sh
