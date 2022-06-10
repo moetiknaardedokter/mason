@@ -2,8 +2,9 @@
 
 function db_import() {
   echo 'Dumping DB'
-  wp @live db dump --exclude_tables=$(wp @live db prefix)toolset_maps_address_cache - >dump.sql
-
+  PREFIX=wp @live config get table_prefix --type=variable
+  wp @live db dump --exclude_tables=${PREFIX}toolset_maps_address_cache - > dump.sql
+  #------------------------------------------------------------------------^ Formatting will strip this space, keep it!!
   echo 'Importing DB'
   wp db reset --yes
   wp db import dump.sql
