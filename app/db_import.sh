@@ -5,6 +5,7 @@ function db_import() {
   wp @live db dump --exclude_tables=$(wp @live db prefix)toolset_maps_address_cache - >dump.sql
 
   echo 'Importing DB'
+  wp db reset --yes
   wp db import dump.sql
   # cleanup
   rm dump.sql
