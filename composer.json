@@ -8,5 +8,6 @@
             "name": "Janw Oostendorp",
             "email": "webmaster@janw.me"
         }
-    ]
+    ],
+    "bin": ["mason"]
 }
