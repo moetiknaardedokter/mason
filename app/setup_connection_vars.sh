@@ -8,12 +8,12 @@ function setup_connection_vars() {
   fi
 
   # Get all @live vars
-  LIVE_SSH=$(wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["ssh"];')
-  LIVE_URL=$(basename $(wp @live option get home))
-  LIVE_PATH=$(wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["path"];')
+  LIVE_SSH=$(wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["ssh"];' --skip-plugins --skip-themes)
+  LIVE_URL=$(basename $(wp @live option get home --skip-plugins --skip-themes))
+  LIVE_PATH=$(wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["path"];' --skip-plugins --skip-themes)
   # Set all local vars
-  LOCAL_URL=$(basename $(wp option get home))
-  LOCAL_PATH=$(wp eval 'echo ABSPATH;')
+  LOCAL_URL=$(basename $(wp option get home --skip-plugins --skip-themes))
+  LOCAL_PATH=$(wp eval 'echo ABSPATH;' --skip-plugins --skip-themes)
 
   #force Trailing slash
   LIVE_PATH=${LIVE_PATH%/}/

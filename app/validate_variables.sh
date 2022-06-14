@@ -24,17 +24,17 @@ function validate_variables() {
   done
 
   echo -e 'Validation remote connection...'
-  wp @live db check &>/dev/null
+  wp @live db check --skip-plugins --skip-themes &>/dev/null
   if [[ $? -ne 0 ]]; then
     echo -e "${C_RED}Error:${C_OFF} can't connect to the live database"
-    wp @live db check
+    wp @live db check --skip-plugins --skip-themes
     exit 1
   fi
   echo -e 'Validation local connection...'
-  wp db check &>/dev/null
+  wp db check --skip-plugins --skip-themes &>/dev/null
   if [[ $? -ne 0 ]]; then
     echo -e "${C_RED}Error:${C_OFF} can't connect to the local database"
-    wp db check
+    wp db check --skip-plugins --skip-themes
     exit 1
   fi
   echo -e "All ${C_GRN}valid! :)${C_OFF}"
