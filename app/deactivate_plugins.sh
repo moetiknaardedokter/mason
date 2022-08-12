@@ -8,12 +8,15 @@ function deactivate_plugins() {
   easy-wp-smtp\
   ithemes-security-pro\
   litespeed-cache\
+  mailgun\
   post-smtp\
+  query-monitor\
   restricted-site-access\
   smtp-mailer\
   under-construction-page\
   worker\
   wordfence\
+  wp-cerber\
   wp-fastest-cache\
   w3-total-cache\
   wp-mail-smtp\
