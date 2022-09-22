@@ -3,10 +3,10 @@
 function sync_files() {
   LIVE_SSH_SERVER=$(echo ${LIVE_SSH} | awk -F: '{print $1}')
   LIVE_SSH_PORT=$(echo ${LIVE_SSH} | awk -F: '{print $2}')
-  PORT=()
+  PORT=''
   if [[ ! -z "${LIVE_SSH_PORT}" ]]; then
     # @link https://superuser.com/a/360986
-    PORT=(-e "ssh -p ${LIVE_SSH_PORT}")
+    PORT="-e 'ssh -p ${LIVE_SSH_PORT}'"
   fi
 
   # Don't sync folders that have .git inside.
@@ -29,5 +29,5 @@ function sync_files() {
   # Prefix the excludes for the argument.
   EXCLUDES=$(printf " --exclude=%s" "${EXCLUDES[@]}")
 
-  rsync "${PORT[@]}" ${LIVE_SSH_SERVER}:${LIVE_PATH} ${LOCAL_PATH} -Pqavz ${EXCLUDES} --delete
+  eval "rsync ${PORT} ${LIVE_SSH_SERVER}:${LIVE_PATH%wp/} ${LOCAL_PATH%wp/} ${EXCLUDES} --delete -Pqavz"
 }
