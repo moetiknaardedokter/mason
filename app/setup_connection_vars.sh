@@ -18,4 +18,6 @@ function setup_connection_vars() {
   #force Trailing slash
   LIVE_PATH=${LIVE_PATH%/}/
   LOCAL_PATH=${LOCAL_PATH%/}/
+  LIVE_PATH=${LIVE_PATH%/wp/}/
+  LOCAL_PATH=${LOCAL_PATH%/wp/}/
 }

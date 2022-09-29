@@ -30,5 +30,5 @@ function sync_files() {
   # Prefix the excludes for the argument.
   EXCLUDES=$(printf " --exclude=%s" "${EXCLUDES[@]}")
 
-  eval "rsync ${PORT} ${LIVE_SSH_SERVER}:${LIVE_PATH%wp/} ${LOCAL_PATH%wp/} ${EXCLUDES} --delete -Pqavz"
+  eval "rsync ${PORT} ${LIVE_SSH_SERVER}:${LIVE_PATH} ${LOCAL_PATH} ${EXCLUDES} --delete -Pqavz"
 }
