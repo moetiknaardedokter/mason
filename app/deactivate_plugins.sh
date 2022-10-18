@@ -8,6 +8,7 @@ function deactivate_plugins() {
   easy-wp-smtp\
   ithemes-security-pro\
   litespeed-cache\
+  limit-login-attempts-reloaded\
   mailgun\
   post-smtp\
   query-monitor\
