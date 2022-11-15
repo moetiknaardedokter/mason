@@ -17,9 +17,12 @@ function sync_files() {
   # Never sync these folders.
   EXCLUDES+=('/wp-content/cache/')
   EXCLUDES+=('/wp-content/uploads/')
+  EXCLUDES+=('/wpcontent/updraft/')
   EXCLUDES+=('/content/cache/')
   EXCLUDES+=('/content/uploads/')
+  EXCLUDES+=('/content/updraft/')
   EXCLUDES+=('/phpmyadmin/')
+  EXCLUDES+=('/assets/')
   EXCLUDES+=('/wp-config.php')
   EXCLUDES+=('/.htaccess*')
 

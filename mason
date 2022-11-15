@@ -5,9 +5,9 @@ SCRIPT_PATH=$(
   cd "$(dirname "$0")"
   pwd -P
 ) # no tailing slash
-SCRIPT_VERSION='1.2.3'
-SCRIPT_VERSION_NAME='Hypno'       # https://en.wikipedia.org/wiki/List_of_generation_I_Pok%C3%A9mon
-C_VERSION="\\033[38;5;220m"       # http://colors.sh/
+SCRIPT_VERSION='1.2.4'
+SCRIPT_VERSION_NAME='Kingler'     # https://en.wikipedia.org/wiki/List_of_generation_I_Pok%C3%A9mon
+C_VERSION="\\033[38;5;203m"       # http://colors.sh/
 C_RED="\033[38;5;9m"
 C_GRN="\033[38;5;28m"
 C_ORN="\033[38;5;202m"
