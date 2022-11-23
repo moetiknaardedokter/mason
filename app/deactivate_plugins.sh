@@ -10,6 +10,7 @@ function deactivate_plugins() {
   litespeed-cache\
   limit-login-attempts-reloaded\
   mailgun\
+  mainwp-child\
   post-smtp\
   query-monitor\
   restricted-site-access\
