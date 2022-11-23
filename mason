@@ -5,9 +5,9 @@ SCRIPT_PATH=$(
   cd "$(dirname "$0")"
   pwd -P
 ) # no tailing slash
-SCRIPT_VERSION='1.2.4'
-SCRIPT_VERSION_NAME='Kingler'     # https://en.wikipedia.org/wiki/List_of_generation_I_Pok%C3%A9mon
-C_VERSION="\\033[38;5;203m"       # http://colors.sh/
+SCRIPT_VERSION='1.3.0'
+SCRIPT_VERSION_NAME='Lickitung'     # https://en.wikipedia.org/wiki/List_of_generation_I_Pok%C3%A9mon
+C_VERSION="\033[38;5;205m"       # http://colors.sh/
 C_RED="\033[38;5;9m"
 C_GRN="\033[38;5;28m"
 C_ORN="\033[38;5;202m"
@@ -16,6 +16,7 @@ C_OFF="\033[0m"
 source ${SCRIPT_PATH}/app/db_import.sh
 source ${SCRIPT_PATH}/app/deactivate_plugins.sh
 source ${SCRIPT_PATH}/app/display_help_mssg.sh
+source ${SCRIPT_PATH}/app/license_keys.sh
 source ${SCRIPT_PATH}/app/print_version.sh
 source ${SCRIPT_PATH}/app/process_flags.sh
 source ${SCRIPT_PATH}/app/readable_time.sh
@@ -35,6 +36,9 @@ process_flags $@
 setup_connection_vars
 validate_variables
 
+#license_keys
+#exit #stop;
+
 SYNC_START_TIME=$(date +%s)
 
 # File SYNC
@@ -49,6 +53,7 @@ if [[ ${ARG_SYNC_DB} == 1 ]]; then
   deactivate_plugins
   replace_url
   set_passwords
+  license_keys
 fi
 
 SYNC_END_TIME=$(date +%s)
