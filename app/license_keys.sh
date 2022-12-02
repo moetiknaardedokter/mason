@@ -21,5 +21,11 @@ function license_keys() {
     wp config set GOOGLE_MAPS_KEY $G_MAPS_KEY --skip-plugins --skip-themes --config-file=${CONFIG_FILE}
   fi
 
+  # Google Maps API
+  MINDD_KEY=$(wp @live config get MINDD_API_KEY --skip-plugins --skip-themes)
+  if [ ! -z "$MINDD_KEY" ]; then
+    wp config set MINDD_API_KEY $MINDD_KEY --skip-plugins --skip-themes --config-file=${CONFIG_FILE}
+  fi
+
   echo 'Done updating license keys'
 }
