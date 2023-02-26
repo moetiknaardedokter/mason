@@ -18,6 +18,7 @@ function deactivate_plugins() {
   query-monitor\
   restricted-site-access\
   smtp-mailer\
+  sparkpost\
   under-construction-page\
   w3-total-cache\
   worker\
