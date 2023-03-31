@@ -16,8 +16,10 @@ function setup_connection_vars() {
   LOCAL_PATH=$(wp eval 'echo ABSPATH;' --skip-plugins --skip-themes)
 
   #force Trailing slash
-  LIVE_PATH=${LIVE_PATH%/wp/%/}
-  LOCAL_PATH=${LOCAL_PATH%/wp/%/}
-  LIVE_PATH=${LIVE_PATH%/%/}
-  LOCAL_PATH=${LOCAL_PATH%/%/}
+  LIVE_PATH=${LIVE_PATH/\/wp\//\/}
+  LOCAL_PATH=${LOCAL_PATH/\/wp\//\/}
+  LIVE_PATH=${LIVE_PATH/\/wp/\/}
+  LOCAL_PATH=${LOCAL_PATH/\/wp/\/}
+  LIVE_PATH=${LIVE_PATH%/}/
+  LOCAL_PATH=${LOCAL_PATH%/}/
 }
