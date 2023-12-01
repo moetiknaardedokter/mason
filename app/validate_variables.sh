@@ -10,6 +10,20 @@ function validate_variables() {
   echo -e "Local domainname:     ${C_GRN}${LOCAL_URL}${C_OFF}"
   echo -e "Local path:           ${C_GRN}${LOCAL_PATH}${C_OFF}"
 
+  if [[ $(jq -r '.mason .extra_domains' <<<"$WP_CLI_JSON") == "null" ]]; then
+    echo -e "No extra domains found in wp-cli.yml file(s)."
+  else
+    echo -e "Extra domains found in wp-cli.yml file(s):"
+    ORIGINAL_URL=($(jq -r '.mason .extra_domains | keys_unsorted[]' <<<"$WP_CLI_JSON"))
+    NEW_URL=($(jq -r '.mason .extra_domains[]' <<<"$WP_CLI_JSON"))
+
+    # Iterate over the keys and values
+    for ((i=0; i<${#ORIGINAL_URL[@]}; i++)); do
+      echo -e "  replacing ${C_GRN}${ORIGINAL_URL[i]}${C_OFF} with ${C_ORN}${NEW_URL[i]}${C_OFF}"
+    done
+    echo -e ''
+  fi
+
   while true; do
     read -p "$(echo -e Are the connection details above correct? ${C_ORN}[y/N]${C_OFF}) " yn
     case $yn in
@@ -22,20 +36,4 @@ function validate_variables() {
       ;; # the user found an error.
     esac
   done
-
-  echo -e 'Validation remote connection...'
-  wp @live db check --skip-plugins --skip-themes &>/dev/null
-  if [[ $? -ne 0 ]]; then
-    echo -e "${C_RED}Error:${C_OFF} can't connect to the live database"
-    wp @live db check --skip-plugins --skip-themes
-    exit 1
-  fi
-  echo -e 'Validation local connection...'
-  wp db check --skip-plugins --skip-themes &>/dev/null
-  if [[ $? -ne 0 ]]; then
-    echo -e "${C_RED}Error:${C_OFF} can't connect to the local database"
-    wp db check --skip-plugins --skip-themes
-    exit 1
-  fi
-  echo -e "All ${C_GRN}valid! :)${C_OFF}"
 }

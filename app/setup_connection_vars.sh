@@ -7,13 +7,38 @@ function setup_connection_vars() {
     exit
   fi
 
+  # locate yml.
+  WP_CLI_JSON=$(wp eval --skip-wordpress 'echo json_encode( Spyc::YAMLLoad( WP_CLI::get_runner()->project_config_path ) );')
+
+  ###############################
   # Get all @live vars
-  LIVE_SSH=$(wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["ssh"];' --skip-plugins --skip-themes)
-  LIVE_URL=$(basename $(wp @live option get home --skip-plugins --skip-themes))
-  LIVE_PATH=$(wp eval --skip-wordpress 'echo \WP_CLI::get_configurator()->get_aliases()["@live"]["path"];' --skip-plugins --skip-themes)
+  ###############################
+  LIVE_SSH=$(jq -r '.["@live"] .ssh' <<<"$WP_CLI_JSON")
+
+  LIVE_PATH=$(jq -r '.["@live"] .path' <<<"$WP_CLI_JSON")
+
+  LIVE_URL=$(jq -r '.["@live"] .url' <<<"$WP_CLI_JSON")
+  if [[ "$LIVE_URL" == "null" ]]; then
+    LIVE_URL=$(wp @live option get home --skip-plugins --skip-themes)
+  fi
+  LIVE_URL=$(basename $LIVE_URL)
+  
+  ###############################
   # Set all local vars
-  LOCAL_URL=$(basename $(wp option get home --skip-plugins --skip-themes))
-  LOCAL_PATH=$(wp eval 'echo ABSPATH;' --skip-plugins --skip-themes)
+  ###############################
+  LOCAL_URL=$(jq -r '.url' <<<"$WP_CLI_JSON")
+  if [[ "$LOCAL_URL" == "null" ]]; then
+    LOCAL_URL=$(wp option get home --skip-plugins --skip-themes)
+  fi
+  LOCAL_URL=$(basename $LOCAL_URL)
+  
+  LOCAL_PATH=$(jq -r '.path' <<<"$WP_CLI_JSON")
+  if [[ "$LOCAL_URL" == "null" ]]; then
+    LOCAL_PATH=$(wp eval 'echo ABSPATH;' --skip-plugins --skip-themes)
+  fi
+  if [[ ! "$LOCAL_PATH" =~ ^/ ]]; then
+    LOCAL_PATH="$WORKING_DIR/$LOCAL_PATH"
+  fi
 
   #force Trailing slash
   LIVE_PATH=${LIVE_PATH/\/wp\//\/}
