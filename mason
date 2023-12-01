@@ -45,12 +45,12 @@ fi
 
 # Database & Extras sync.
 if [[ ${ARG_SYNC_DB} == 1 ]]; then
-  # db_import
-  # update_wp_config
+  db_import
+  replace_url
+  update_wp_config
   deactivate_plugins
-  # replace_url
-  # set_passwords
-  # license_keys
+  set_passwords
+  license_keys
 fi
 
 SYNC_END_TIME=$(date +%s)

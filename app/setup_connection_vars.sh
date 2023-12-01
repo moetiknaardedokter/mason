@@ -37,7 +37,7 @@ function setup_connection_vars() {
     LOCAL_PATH=$(wp eval 'echo ABSPATH;' --skip-plugins --skip-themes)
   fi
   if [[ ! "$LOCAL_PATH" =~ ^/ ]]; then
-    LOCAL_PATH="$WORKING_DIR/$LOCAL_PATH"
+    LOCAL_PATH="$WORKING_PATH/$LOCAL_PATH"
   fi
 
   #force Trailing slash

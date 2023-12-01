@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 function replace_url() {
+  # we need the prefix to be the same, before we can do a search-replace.
+  wp config set table_prefix --type=variable $(wp @live config get table_prefix --type=variable --skip-plugins --skip-themes) --skip-plugins --skip-themes
+  wp config set DB_CHARSET $(wp @live config get DB_CHARSET) --skip-plugins --skip-themes
+
   echo -e "replacing main URL ${C_GRN}${LIVE_URL}${C_OFF} with ${C_ORN}${LOCAL_URL}${C_OFF}"
   wp search-replace --all-tables --report-changed-only "${LIVE_URL}" "${LOCAL_URL}"
   wp search-replace --all-tables --report-changed-only "https://${LOCAL_URL}" "http://${LOCAL_URL}"
