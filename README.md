@@ -10,6 +10,14 @@ path: public_html/  # if the script is not run from the ABSPATH
 @live:
   path: /var/www/exmaple.com/public_html
   ssh: user@exampl.com:123
+mason:
+  extra_domains: 
+    # will do extra search replaces for urls.
+    www.example.com: local-domain.test
+  extra_config:
+    ACF_PRO_LICENSE:      "@SYNC" # will sync the value from the live environment.
+    WP_DEBUG_DISPLAY:     true # will always set the debug display to true
+    WP_ENVIRONMENT_TYPE:  "development" # For stings quotes are required.
 ```
 
 Just call the `/mason/mason` This will do the following:
@@ -31,6 +39,6 @@ Options
 Examples.
 
  - `/mason/mason` Will sync the DB and main files.
- - `/mason/mason --uploads` Will sync everything, including the upload files.
  - `/mason/mason --files-only` Syncs WP-core, themes, plugins and mu-plugins, that's all.
  - `/mason/mason --db-only` Syncs the Database, but no files.
+ - `/mason/mason --uploads` Will sync all of the above, including the upload files.
