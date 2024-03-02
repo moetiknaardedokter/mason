@@ -25,6 +25,8 @@ function sync_files() {
   EXCLUDES+=('/assets/')
   EXCLUDES+=('/wp-config.php')
   EXCLUDES+=('/.htaccess*')
+  EXCLUDES+=('/mason/')
+  EXCLUDES+=('/wp-cli.*')
 
   for i in ${!EXCLUDES[@]}; do
     EXCLUDES[i]="${EXCLUDES[i]/"$LOCAL_PATH"/"/"}"
