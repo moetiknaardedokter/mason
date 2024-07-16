@@ -16,7 +16,7 @@ C_OFF="\033[0m"
 source ${SCRIPT_PATH}/app/db_import.sh
 source ${SCRIPT_PATH}/app/deactivate_plugins.sh
 source ${SCRIPT_PATH}/app/display_help_mssg.sh
-source ${SCRIPT_PATH}/app/license_keys.sh
+# source ${SCRIPT_PATH}/app/license_keys.sh
 source ${SCRIPT_PATH}/app/print_version.sh
 source ${SCRIPT_PATH}/app/process_flags.sh
 source ${SCRIPT_PATH}/app/readable_time.sh
